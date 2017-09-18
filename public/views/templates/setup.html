@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <!-- div class="jumbotron" -->
+    <div class="alt-table-responsive">
+      <div layout-gt-sm="row">
+        <h3 class="md-headline">Setup</h3>
+        <h3 class="md-caption" style="color:red"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{comment}}</h3>
+      </div>
+
+      <div layout-sm="row">
+        <md-input-container>
+          <label>User Name</label>
+          <input ng-model="username">
+        </md-input-container>
+        <md-input-container>
+          <label>Org Name</label>
+          <input ng-model="orgname">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="login()">Login</md-button>
+      </div>
+
+      <div layout-sm="row">
+        <md-input-container class="md-accent">
+          <label>Channel Name</label>
+          <input ng-model="channelName">
+        </md-input-container>
+        <md-input-container class="md-accent">
+          <label>Channel Config Path</label>
+          <input ng-model="channelConfigPath">
+        </md-input-container>
+        <md-button class="md-raised md-accent" ng-click="createChannel()">Create Channel</md-button>
+        <md-button class="md-raised md-accent" ng-click="joinChannel()">Join Channel</md-button>
+      </div>
+
+      <uib-accordion close-others="true">
+        <uib-accordion-group heading="Example" class="panel-danger">
+          <div>
+            <md-button class="md-raised md-warn" ng-click="installChaincode_ex()">Install Chaincode</md-button>
+            <md-button class="md-raised md-warn" ng-click="instantiateChaincode_ex()">Instantiate Chaincode</md-button>
+          </div>
+
+          <div layout-sm="row">
+            <md-input-container class="md-warn">
+              <label>Chaincode Name</label>
+              <input ng-model="chaincodeName_ex">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Chaincode Path</label>
+              <input ng-model="chaincodePath_ex">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Chaincode Version</label>
+              <input ng-model="chaincodeVersion_ex">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Function Name</label>
+              <input ng-model="functionName_ex">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Arguments</label>
+              <input ng-model="args_ex">
+            </md-input-container>
+          </div>
+        </uib-accordion-group>
+
+        <uib-accordion-group heading="Stock Loan" class="panel-danger">
+          <div>
+            <md-button class="md-raised md-warn" ng-click="installChaincode_sl()">Install Chaincode</md-button>
+            <md-button class="md-raised md-warn" ng-click="instantiateChaincode_sl()">Instantiate Chaincode</md-button>
+          </div>
+
+          <div layout-sm="row">
+            <md-input-container class="md-warn">
+              <label>Chaincode Name</label>
+              <input ng-model="chaincodeName_sl">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Chaincode Path</label>
+              <input ng-model="chaincodePath_sl">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Chaincode Version</label>
+              <input ng-model="chaincodeVersion_sl">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Function Name</label>
+              <input ng-model="functionName_sl">
+            </md-input-container>
+            <md-input-container class="md-warn">
+              <label>Arguments</label>
+              <input ng-model="args_sl">
+            </md-input-container>
+          </div>
+        </uib-accordion-group>
+      </uib-accordion>
+
+      <div layout-sm="row">
+        <md-button class="md-raised md-warn" ng-click="queryChainInfo()">Query ChainInfo</md-button>
+        <md-button class="md-raised md-warn" ng-click="queryChaincode('installed')">Query Installed Chaincode</md-button>
+        <md-button class="md-raised md-warn" ng-click="queryChaincode('instantiated')">Query Instantiated Chaincode</md-button>
+      </div>
+
+      <div layout-sm="row">
+        <md-input-container class="md-warn">
+          <label>Block Number</label>
+          <input ng-model="blockNumber">
+        </md-input-container>
+        <md-button class="md-raised md-warn" ng-click="queryBlock(blockNumber)">Query Block</md-button>
+        <md-input-container class="md-warn">
+          <label>Transaction ID</label>
+          <input ng-model="transactionId">
+        </md-input-container>
+        <md-button class="md-raised md-warn" ng-click="queryTransaction(transactionId)">Query Transaction</md-button>
+      </div>
+
+    </div>
+  <!-- /div -->
+</div>

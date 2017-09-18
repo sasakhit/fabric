@@ -1,0 +1,18 @@
+{
+   "host":"localhost",
+   "port":"4000",
+   "jwt_expiretime": "36000",
+   "channelName":"mychannel",
+   "GOPATH":"../artifacts",
+   "keyValueStore":"/tmp/fabric-client-kvs",
+   "eventWaitTime":"30000",
+   "orderer":"grpcs://192.168.99.100:7050",
+   "peers":["192.168.99.100:7051", "192.168.99.100:7056"],
+   "peers_instantiate":["192.168.99.100:7051"],
+   "users":[
+      {
+         "username":"admin",
+         "secret":"adminpw"
+      }
+   ]
+}

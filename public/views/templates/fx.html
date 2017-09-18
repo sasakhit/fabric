@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="jumbotron">
+    <div class="alt-table-responsive">
+      <h3>FX</h3>
+
+      <label>Chaincode ID:</label>
+      <div class="form-group">
+        <input class="form-control" type="text" ng-model="chaincodeID">
+      </div>
+
+      <button class="btn btn-primary" ng-click="login()">Login</button>
+      <div class="form-inline">
+        User Name: <input class="form-control" type="text" ng-model="username">
+        Password: <input class="form-control" type="text" ng-model="password">
+      </div>
+      <br>
+
+      <button class="btn btn-primary" ng-click="invoke(fromAccount, fromCcy, fromAmt, toAccount, toCcy, toAmt)">Trade FX</button>
+      <br>
+      <label>From</label>
+      <div class="form-inline">
+        Account: <input class="form-control" type="text" ng-model="fromAccount">
+        Ccy: <input class="form-control" type="text" ng-model="fromCcy">
+        Amt: <input class="form-control" type="number" ng-model="fromAmt">
+      </div>
+      <label>To</label>
+      <div class="form-inline">
+        Account: <input class="form-control" type="text" ng-model="toAccount">
+        Ccy: <input class="form-control" type="text" ng-model="toCcy">
+        Amt: <input class="form-control" type="number" ng-model="toAmt">
+      </div>
+      <br>
+
+      <!-- button class="btn btn-danger" ng-click="deploy()">Deploy</button -->
+      <button class="btn btn-warning" ng-click="query()">Get Balances</button>
+      {{comment}}
+
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="account in accounts">
+          <tr>
+            <td>{{account.id}}</td>
+            <td>
+              <table>
+              <tr ng-repeat="balance in account.balances">
+                <td>{{balance.ccy}}</td><td>{{balance.amt}}</td>
+              </tr>
+            </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

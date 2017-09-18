@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Blockchain</title>
+
+    <link rel="icon" type="image/png" href="/images/eschool_favicon.png" />
+
+    <link rel="stylesheet" href="/styles/bootstrap.css" />
+    <link rel="stylesheet" href="/styles/font-awesome.css" />
+    <link rel="stylesheet" href="/styles/stylesheet.css" />
+    <link rel="stylesheet" href="/styles/ng-tags-input.css" />
+    <link rel="stylesheet" href="/styles/ng-tags-input.bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/angular-material.min.css" />
+
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="styles/schedule.css">
+    <link rel="stylesheet" href="styles/stylesheet.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+    <!-- JS -->
+    <script type="text/javascript" src="/vendors/angular.js"></script>
+    <script type="text/javascript" src="/vendors/angular-animate.js"></script>
+    <script type="text/javascript" src="/vendors/angular-route.js"></script>
+    <script type="text/javascript" src="/vendors/angular-aria.min.js"></script>
+    <script type="text/javascript" src="/vendors/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/vendors/ng-tags-input.min.js"></script>
+    <script type="text/javascript" src="/vendors/underscore-min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-material.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/setupController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/exampleController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/counterController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/fxController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/slController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/chatController.js"></script>
+    <script type="text/javascript" src="/scripts/models/dataService.js"></script>
+    <script type="text/javascript" src="/scripts/models/socketService.js"></script>
+    <script type="text/javascript" src="/scripts/models/utils.js"></script>
+  </head>
+
+  <body ng-app="myApp">
+    <div ng-include="'/templates/nav.html'"></div>
+    <main ng-view></main>
+  </body>
+</html>

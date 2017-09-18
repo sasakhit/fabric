@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <!-- div class="jumbotron" -->
+    <div class="alt-table-responsive">
+      <div layout-gt-sm="row">
+        <h3 class="md-headline">Stock Loan</h3>
+        <h3 class="md-caption" style="color:red"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{comment}}</h3>
+      </div>
+
+      <div layout-gt-sm="row">
+        <md-input-container>
+          <label>User Name</label>
+          <input ng-model="username">
+        </md-input-container>
+        <md-input-container>
+          <label>Org Name</label>
+          <input ng-model="orgname">
+        </md-input-container>
+        <md-input-container>
+          <label>Chaincode Name</label>
+          <input ng-model="chaincodeName">
+        </md-input-container>
+      </div>
+
+      <div>
+        <md-button class="md-raised md-primary" ng-click="tradeSl($event)">Trade SL</md-button>
+        <md-button class="md-raised md-warn" ng-click="getOutstandings()">Get Outstandings</md-button>
+        <md-button class="md-raised md-warn" ng-click="getTransactions()">Get Transactions</md-button>
+        <md-button class="md-raised md-accent" ng-click="marginCall()">Margin Call</md-button>
+        <md-button class="md-raised md-primary" ng-click="queryChainInfo()">Query ChainInfo</md-button>
+        <!-- Block Height: {{blockheight}} -->
+      </div>
+
+      <label>Outstandings</label>
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Borrower</th>
+            <th>Lender</th>
+            <th>SecCode/Ccy</th>
+            <th>Qty/Amt</th>
+            <th>Price/Rate</th>
+            <th>MTM</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="outstanding in outstandings">
+          <tr>
+            <td>{{outstanding.borrower}}</td>
+            <td>{{outstanding.lender}}</td>
+            <td>{{outstanding.secCode}}</td>
+            <td>{{outstanding.qty}}</td>
+            <td>{{outstanding.price}}</td>
+            <td>{{outstanding.mtm}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <label>Transactions</label>
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Borrower</th>
+            <th>Lender</th>
+            <th>Trade Date</th>
+            <th>Settle Date</th>
+            <th>SecCode</th>
+            <th>Qty</th>
+            <th>Ccy</th>
+            <th>Amt</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="transaction in transactions">
+          <tr>
+            <td>{{transaction.brInd}}</td>
+            <td>{{transaction.borrower}}</td>
+            <td>{{transaction.lender}}</td>
+            <td>{{transaction.tradeDate | date}}</td>
+            <td>{{transaction.settleDate | date}}</td>
+            <td>{{transaction.secCode}}</td>
+            <td>{{transaction.qty}}</td>
+            <td>{{transaction.ccy}}</td>
+            <td>{{transaction.amt}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <!-- /div -->
+</div>

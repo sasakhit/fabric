@@ -1,0 +1,49 @@
+{
+  "name": "Hello-Blockchain",
+  "version": "0.0.1",
+  "description": "A Node.js hello-world program using NodeSdk Apis",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "keywords": [
+    "Blockchain Hello-World",
+    "Hello-Blockchain",
+    "Blockchain sample program",
+    "blockchain hello world"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM-Blockchain/SDK-Demo.git"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "hfc": "^0.6.5",
+    "socket.io": "^2.0.3",
+    "angular": "^1.5.2",
+    "angular-animate": "^1.5.2",
+    "angular-moment": "^1.0.0-beta.6",
+    "angular-route": "^1.5.2",
+    "angular-cookies": "^1.5.2",
+    "angular-ui-bootstrap": "^1.2.5",
+    "angular-smart-table": "^2.1.8",
+    "body-parser": "^1.15.0",
+    "bootstrap": "^3.3.6",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "font-awesome": "^4.5.0",
+    "winston": "2.2.*",
+    "fabric-ca-client": "1.0.0",
+    "fabric-client": "1.0.0",
+    "bluebird": "*",
+    "cors": "^2.8.3",
+    "express-bearer-token": "^2.1.0",
+    "express-jwt": "^5.1.0",
+    "fs-extra": "^2.0.0",
+    "jsonwebtoken": "^7.3.0",
+    "log4js": "^0.6.38"
+  }
+}

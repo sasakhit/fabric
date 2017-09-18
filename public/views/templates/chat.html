@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <!-- div class="jumbotron" -->
+    <h3 class="md-headline">Chat Room</h3>
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="msgForm">{{label}}</label>
+        <input type="text" class="form-control" id="msgForm" ng-model="message">
+      </div>
+      <!-- button type="submit" class="btn btn-primary" id="sendButton" ng-click="submit(message)">{{button}}</button -->
+      <md-button class="md-raised md-primary" id="sendButton" ng-click="submit(message)">{{button}}</md-button>
+    </form>
+    <div ng-repeat="chatlog in chatlogs">{{chatlog}}</div>
+  <!-- /div -->
+</div>

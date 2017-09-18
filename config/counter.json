@@ -1,0 +1,13 @@
+{
+   "deployRequest":{
+      "chaincodePath":"chaincode_counter",
+      "functionName":"init",
+      "args":[]
+   },
+   "invokeRequest":{
+      "functionName":"countUp"
+   },
+   "queryRequest":{
+      "functionName":"getCounters"
+   }
+}

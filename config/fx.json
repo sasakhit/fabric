@@ -1,0 +1,13 @@
+{
+   "deployRequest":{
+      "chaincodePath":"chaincode_fx",
+      "functionName":"init",
+      "args":[]
+   },
+   "invokeRequest":{
+      "functionName":"tradeFx"
+   },
+   "queryRequest":{
+      "functionName":"getBalances"
+   }
+}

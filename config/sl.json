@@ -1,0 +1,16 @@
+{
+   "deployRequest":{
+      "chaincodePath":"chaincode_sl",
+      "functionName":"init",
+      "args":[]
+   },
+   "invokeRequest":{
+      "functionName":"tradeSl"
+   },
+   "marginCallRequest":{
+      "functionName":"calcMarginCall"
+   },
+   "queryRequest":{
+      "functionName":"getOutstandings"
+   }
+}

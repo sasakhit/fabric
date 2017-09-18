@@ -1,0 +1,40 @@
+{
+	"credentials": {
+		"network_id": "byfn",
+		"orderers": [
+			{
+				"discovery": "grpc://192.168.99.100:7050",
+				"msp_id": "Org1MSP",
+				"tls_certificate": "cert_1"
+			}
+		],
+		"cas": [
+			{
+				"api": "http://192.168.99.100:7054",
+				"msp_id": "Org1MSP",
+				"users": [
+					{
+						"enrollId": "admin",
+						"enrollSecret": "adminpw"
+					}
+				],
+				"tls_certificate": "cert_1"
+			}
+		],
+		"peers": [
+			{
+				"name": "peer0.org1.example.com",
+				"discovery": "grpc://192.168.99.100:7051",
+				"events": "grpc://192.168.99.100:7053",
+				"msp_id": "Org1MSP",
+				"tls_certificate": "cert_1"
+			}
+		],
+		"app": {
+			"channel_id": "mychannel",
+			"chaincode_id": "mycc",
+			"chaincode_version": "v0",
+			"block_delay": 10000
+		}
+	}
+}

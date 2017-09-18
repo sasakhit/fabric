@@ -1,0 +1,26 @@
+{
+   "deployRequest":{
+      "chaincodePath":"chaincode_example02",
+      "functionName":"init",
+      "args":[
+         "a",
+         "100",
+         "b",
+         "200"
+      ]
+   },
+   "invokeRequest":{
+      "functionName":"invoke",
+      "args":[
+         "a",
+         "b",
+         "10"
+      ]
+   },
+   "queryRequest":{
+      "functionName":"query",
+      "args":[
+         "a"
+      ]
+   }
+}

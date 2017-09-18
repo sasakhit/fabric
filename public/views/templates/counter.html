@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div class="jumbotron">
+    <div class="alt-table-responsive">
+      <h3>Counter</h3>
+
+      <label>Chaincode ID:</label>
+      <div class="form-group">
+        <input class="form-control" type="text" ng-model="chaincodeID">
+      </div>
+
+      <button class="btn btn-primary" ng-click="login()">Login</button>
+      <div class="form-inline">
+        User Name: <input class="form-control" type="text" ng-model="username">
+        Password: <input class="form-control" type="text" ng-model="password">
+      </div>
+      <br>
+
+      <!-- button class="btn btn-danger" ng-click="deploy()">Deploy</button -->
+      <button class="btn btn-primary" ng-click="invoke(selectedItem)">Count Up</button>
+      <button class="btn btn-warning" ng-click="query()">Refresh</button>
+      {{comment}}
+
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Counts</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="counter in counters">
+          <tr>
+            <td><input type="radio" name="counterGroup" ng-value="$index" ng-model="selectedItem" ng-change="changeItem($index)">
+            <td>{{counter.name}}</td>
+            <td>{{counter.counts}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
