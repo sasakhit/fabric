@@ -42,7 +42,7 @@ function stopNetwork() {
 
 function startNetwork() {
 	#Start the network
-	docker-compose up -d
+	docker-compose -f docker-compose.yaml -f docker-compose-couch.yaml up -d
 	cd -
 	echo
 }

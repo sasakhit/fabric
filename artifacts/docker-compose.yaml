@@ -147,7 +147,6 @@ services:
     command: /bin/bash -c 'sleep 6000000'
     volumes:
       - /var/run/:/host/var/run/
-      - ./../chaincode-docker-devmode/msp:/etc/hyperledger/msp
       - ./../artifacts/src:/opt/gopath/src/chaincode
     depends_on:
       - orderer.example.com

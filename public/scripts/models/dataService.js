@@ -163,13 +163,14 @@ myApp.factory('DataService',
       function invokeSlTrade(brInd, borrower, lender, tradeDate, settleDate, secCode, qty, ccy, amt, channelName, chaincodeName, functionName) {
         var trade = {brInd: brInd, borrower: borrower, lender: lender, tradeDate: tradeDate, settleDate: settleDate, secCode: secCode, qty: qty, ccy: ccy, amt: amt};
         var args = [JSON.stringify(trade)];
+        alert(args);
         return $http.post('/channels/' + channelName + '/chaincodes/' + chaincodeName, {fcn: functionName, args: args}).then(function(response) {
           return response.data;
         });
       }
 
-      function invokeSlCommon(channelName, chaincodeName, functionName) {
-        return $http.post('/channels/' + channelName + '/chaincodes/' + chaincodeName, {fcn: functionName, args: []}).then(function(response) {
+      function invokeSlCommon(channelName, chaincodeName, functionName, args) {
+        return $http.post('/channels/' + channelName + '/chaincodes/' + chaincodeName, {fcn: functionName, args: args}).then(function(response) {
           return response.data;
         });
       }

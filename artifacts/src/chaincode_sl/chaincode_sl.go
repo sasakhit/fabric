@@ -4,7 +4,7 @@ import (
   "encoding/json"
 	"errors"
 	"fmt"
-  "time"
+  "bytes"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
   pb "github.com/hyperledger/fabric/protos/peer"
@@ -34,16 +34,6 @@ type Outstanding struct {
   Qty float64 `json:"qty"`
   Price float64 `json:"price"`
   Mtm float64 `json:"mtm"`
-}
-
-const (
-	millisPerSecond = int64(time.Second / time.Millisecond)
-	nanosPerMillisecond = int64(time.Millisecond / time.Nanosecond)
-)
-
-func timeToMs(t time.Time) (string) {
-  ms := t.UnixNano() / nanosPerMillisecond
-  return string(ms)
 }
 
 func (cc *SlChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
@@ -89,7 +79,6 @@ func (cc *SlChaincode) getOutstanding(stub shim.ChaincodeStubInterface, key stri
 		logger.Info("Outstanding found " + key)
 		found = true
 
-    //logger.Info("Unmarshalling Outstanding")
     err = json.Unmarshal(outstandingBytes, &outstanding)
     if err != nil {
       logger.Error("Error unmarshalling outstanding " + key)
@@ -263,7 +252,7 @@ func (cc *SlChaincode) writeTransaction(stub shim.ChaincodeStubInterface, transa
 }
 
 func (cc *SlChaincode) tradeSl(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-  logger.Info("Trading Stockloan")
+  logger.Info("*** Trading Stockloan ***")
 
   err := cc.bookTrade(stub, args, Transaction{})
   if err != nil {
@@ -287,6 +276,7 @@ func (cc *SlChaincode) bookTrade(stub shim.ChaincodeStubInterface, args []string
     tr = transaction
   } else {
     if len(args) != 1 {
+      logger.Error("Incorrect number of arguments. Expecting Stockloan transaction record")
       return errors.New("Incorrect number of arguments. Expecting Stockloan transaction record")
     }
 
@@ -526,9 +516,11 @@ func (cc *SlChaincode) revaluateMtm(stub shim.ChaincodeStubInterface, args []str
 func (cc *SlChaincode) calcMarginCall(stub shim.ChaincodeStubInterface, args []string) pb.Response {
   logger.Info("Calculating margin call")
 
-  now := time.Now()
-  today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
-  todayMs := timeToMs(today)
+  if len(args) != 1 {
+    return shim.Error("Incorrect number of arguments. Expecting revaluation date")
+  }
+  revalDate := args[0]
+  logger.Info("revalDate: ", revalDate)
 
   // Get list of all the keys
   keys, err := cc.getAllKeys(stub, "OutstandingKeys")
@@ -574,10 +566,11 @@ func (cc *SlChaincode) calcMarginCall(stub shim.ChaincodeStubInterface, args []s
 
   threshold := 100.0
   for key, value := range outTotals {
+    logger.Info("value: ", value)
     if value > threshold {
-      marginCall = Transaction{BRInd: "M", Borrower: key[0], Lender: key[1], TradeDate: todayMs, SettleDate: todayMs, SecCode: "", Qty: 0, Ccy: "JPY", Amt: value}
+      marginCall = Transaction{BRInd: "M", Borrower: key[0], Lender: key[1], TradeDate: revalDate, SettleDate: revalDate, SecCode: "", Qty: 0, Ccy: "JPY", Amt: value}
     } else if value < -1 * threshold {
-      marginCall = Transaction{BRInd: "M", Borrower: key[1], Lender: key[0], TradeDate: todayMs, SettleDate: todayMs, SecCode: "", Qty: 0, Ccy: "JPY", Amt: -1 * value}
+      marginCall = Transaction{BRInd: "M", Borrower: key[1], Lender: key[0], TradeDate: revalDate, SettleDate: revalDate, SecCode: "", Qty: 0, Ccy: "JPY", Amt: -1 * value}
     }
 
     if marginCall != (Transaction{}) {
@@ -626,6 +619,15 @@ func (cc *SlChaincode) getOutstandings(stub shim.ChaincodeStubInterface, args []
     logger.Error("Error getting all keys")
     return shim.Error("Error getting all keys")
   }
+
+  // Sample code for rich query
+  queryString := "{\"selector\":{\"secCode\":\"8756\"}}"
+  logger.Info("queryString: ", queryString)
+	queryResults, err := getQueryResultForQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+  logger.Info("queryResults: ", queryResults)
 
   // In case of no outstandings
   if keys == nil {
@@ -685,6 +687,52 @@ func (cc *SlChaincode) getTransactions(stub shim.ChaincodeStubInterface, args []
   }
 
   return shim.Success(allTransactionsBytes)
+}
+
+// =========================================================================================
+// getQueryResultForQueryString executes the passed in query string.
+// Result set is built and returned as a byte array containing the JSON results.
+// =========================================================================================
+func getQueryResultForQueryString(stub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
+
+	logger.Info("- getQueryResultForQueryString queryString: ", queryString)
+
+	resultsIterator, err := stub.GetQueryResult(queryString)
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryRecords
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	logger.Info("- getQueryResultForQueryString queryResult: ", buffer.String())
+
+	return buffer.Bytes(), nil
 }
 
 func main() {

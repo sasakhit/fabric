@@ -14,7 +14,7 @@ myApp.controller('setupController',
     $scope.args_ex = ["a","100","b","200"];
     $scope.chaincodeName_sl = 'chaincode_sl';
     $scope.chaincodePath_sl = 'chaincode_sl';
-    $scope.chaincodeVersion_sl = 'v0';
+    $scope.chaincodeVersion_sl = 'v1';
     $scope.functionName_sl = 'n/a';
     $scope.args_sl = ["n/a"];
 
@@ -132,32 +132,6 @@ myApp.controller('setupController',
         Utils.toast(data);
       });
     }
-
-    /*
-    $scope.query = function(owner) {
-      $scope.comment = 'Querying ...';
-      DataService.queryHelloworld(owner, $scope.channelName, $scope.chaincodeName)
-        .then(function(data) {
-          $scope.owner = owner;
-          $scope.quantity = data;
-          $scope.comment = '';
-        })
-        .catch(function(error) {
-          $scope.comment = error.data;
-        });
-    }
-
-    $scope.invoke = function(fromOwner, toOwner, moveQuantity) {
-      $scope.comment = 'Invoking ...';
-      DataService.invokeHelloworld(fromOwner, toOwner, moveQuantity, $scope.channelName, $scope.chaincodeName)
-        .then(function(data) {
-          $scope.comment = 'Invoking ...';
-        })
-        .catch(function(error) {
-          $scope.comment = error.data;
-        });
-    }
-    */
 
   }
 ]);

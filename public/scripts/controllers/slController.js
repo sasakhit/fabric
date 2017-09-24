@@ -1,6 +1,6 @@
 myApp.controller('slController',
-  ['$http', '$rootScope', '$scope', '$route', '$log', '$mdDialog', '$filter', 'DataService', 'socket',
-  function($http, $rootScope, $scope, $route, $log, $mdDialog, $filter, DataService, socket) {
+  ['$http', '$rootScope', '$scope', '$route', '$log', '$mdDialog', '$filter', 'DataService', 'socket', 'Utils',
+  function($http, $rootScope, $scope, $route, $log, $mdDialog, $filter, DataService, socket, Utils) {
 
     var user;
     var now = new Date();
@@ -28,8 +28,7 @@ myApp.controller('slController',
     $scope.queryChainInfo = function() {
       DataService.queryChainInfo($scope.channelName)
         .then(function(data) {
-          alert('Block Height: ' + data.height.low);
-          //$scope.comment = data;
+          Utils.dialog('Block Height', data.height.low);
         })
         .catch(function(error) {
           alert(error)
@@ -78,7 +77,7 @@ myApp.controller('slController',
                 $scope.comment = 'Done!';
                 getOutstandings();
                 getTransactions();
-                alert("Trade is recorded in Blockchain");
+                Utils.toast("Trade is recorded in Blockchain");
                 $mdDialog.hide();
               })
               .catch(function(error) {
@@ -129,14 +128,19 @@ myApp.controller('slController',
       $scope.comment = 'Calculating Margin Calls ...';
       revaluateMtm()
         .then(function() {
-          return calcMarginCall();
+          return calcMarginCall(today);
         })
         .then(function() {
+          $scope.comment = 'Offsetting Outstandings ...';
           return offsetOutstandings();
         })
         .then(function() {
+          $scope.comment = 'Revaluating ...';
+          return revaluateMtm();
+        })
+        .then(function() {
           $scope.comment = 'Done';
-          alert('Margin Calls are recorded in Blockchain');
+          Utils.toast('Margin Calls are recorded in Blockchain');
           getOutstandings();
           getTransactions();
         })
@@ -147,9 +151,12 @@ myApp.controller('slController',
 
     function bookSlTrade(brInd, borrower, lender, tradeDate, settleDate, secCode, qty, ccy, amt) {
       $scope.comment = 'Booking SL Trade ...';
-      var tradeDateMs = tradeDate.getTime().toString();
-      var settleDateMs = settleDate.getTime().toString();
-      var promise = DataService.invokeSlTrade(brInd, borrower, lender, tradeDateMs, settleDateMs, secCode, qty, ccy, amt, $scope.channelName, $scope.chaincodeName, 'tradeSl')
+      //var tradeDateMs = tradeDate.getTime().toString();
+      //var settleDateMs = settleDate.getTime().toString();
+      var trade = {brInd: brInd, borrower: borrower, lender: lender, tradeDate: tradeDate, settleDate: settleDate, secCode: secCode, qty: qty, ccy: ccy, amt: amt};
+      var args = [JSON.stringify(trade)];
+      //var promise = DataService.invokeSlTrade(brInd, borrower, lender, tradeDate, settleDate, secCode, qty, ccy, amt, $scope.channelName, $scope.chaincodeName, 'tradeSl')
+      var promise = DataService.invokeSlCommon($scope.channelName, $scope.chaincodeName, 'tradeSl', args)
         .then(function(data) {
           $scope.comment = data;
         })
@@ -160,9 +167,10 @@ myApp.controller('slController',
       return promise;
     }
 
-    function calcMarginCall() {
+    function calcMarginCall(revalDate) {
       $scope.comment = 'Calculating Margin Calls ...';
-      var promise = DataService.invokeSlCommon($scope.channelName, $scope.chaincodeName, 'calcMarginCall')
+      var args = [revalDate]
+      var promise = DataService.invokeSlCommon($scope.channelName, $scope.chaincodeName, 'calcMarginCall', args)
         .then(function(data) {
           $scope.comment = data;
         })
@@ -175,7 +183,8 @@ myApp.controller('slController',
 
     function offsetOutstandings() {
       $scope.comment = 'Offsetting Outstandings ...';
-      var promise = DataService.invokeSlCommon($scope.channelName, $scope.chaincodeName, 'offsetOutstandings')
+      var args = ['n/a']
+      var promise = DataService.invokeSlCommon($scope.channelName, $scope.chaincodeName, 'offsetOutstandings', args)
         .then(function(data) {
           $scope.comment = data;
         })
@@ -188,7 +197,8 @@ myApp.controller('slController',
 
     function revaluateMtm() {
       $scope.comment = 'Revaluating ...';
-      var promise = DataService.invokeSlCommon($scope.channelName, $scope.chaincodeName, 'revaluateMtm')
+      var args = ['n/a']
+      var promise = DataService.invokeSlCommon($scope.channelName, $scope.chaincodeName, 'revaluateMtm', args)
         .then(function(data) {
           $scope.comment = data;
         })
