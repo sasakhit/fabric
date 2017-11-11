@@ -30,6 +30,7 @@
     "angular-cookies": "^1.5.2",
     "angular-ui-bootstrap": "^1.2.5",
     "angular-smart-table": "^2.1.8",
+    "angular-chart.js": "1.1.1",
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "express": "^4.13.4",

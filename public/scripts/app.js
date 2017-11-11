@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp',
-  ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ngTagsInput' , 'ngMaterial', 'ngCookies']);
+  ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ngTagsInput' , 'ngMaterial', 'ngCookies', 'chart.js']);
 
 myApp.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
 
@@ -27,6 +27,10 @@ myApp.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $
     .when('/chat', {
       templateUrl: '/views/templates/chat.html',
       controller: 'chatController'
+    })
+    .when('/vote', {
+      templateUrl: '/views/templates/vote.html',
+      controller: 'voteController'
     })
     .when('/notImplemented', {
       templateUrl: '/views/templates/notImplemented.html'
